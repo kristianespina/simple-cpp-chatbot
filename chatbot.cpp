@@ -1,4 +1,3 @@
-// Ver1
 #include <iostream>
 #include <vector>
 #include <cstring> // String
