@@ -1,6 +1,6 @@
 # Simple C++ Chatbot
 
-This was created for our subject COMP201 - Computer Fundamentals and Programming for General Engineering Students 2nd year
+This was created for our subject COMP201 - Computer Fundamentals and Programming for 2nd Year General Engineering Students
 ### Version
 1.0.0 - Probably the last XD
 ### Note
