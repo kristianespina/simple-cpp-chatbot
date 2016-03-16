@@ -37,10 +37,14 @@ int main()
     replyWith(reply);
   }
 }
-/** Loads the brain from file
-* @param NONE
-* @return NONE
-*/
+
+/**
+ * Loads the brain from file
+ * and pushes it to memory
+ *
+ * @param NONE
+ * @return NONE
+ */
 void loadBrain()
 {
   cout << "[BOT CONSOLE] > INITIALIZING BRAIN FILE\n";
@@ -56,9 +60,11 @@ void loadBrain()
        << "@exit to end chat session :)\n" // Lahat ng bagay may katapusan :(
        << "BOT: Hi!~\n"; // Pero lahat ay nagsisimula sa simpleng "hi!"
 }
-/** Appends the message into the file
-* @param {string} message to Append
-*/
+
+/**
+ * Appends the message into the file
+ * @param {string} message to append
+ */
 void saveToBrain(string message)
 {
   /* Append the message to the local file */
@@ -67,32 +73,45 @@ void saveToBrain(string message)
   brainFile.close();
 
   /**
-  * Push the message to the memory
-  * To prevent Segmentation fault
-  * if memory is undefined
-  */
+   * Push the message to the memory
+   * To prevent Segmentation fault
+   * if memory is undefined
+   */
   memory.push_back(message);
 }
 
-/** Ask for user input
-* @param NONE
-* @return {string} User's input
-*/
+/**
+ * Ask for user input
+ * @param NONE
+ * @return {string} User's input
+ */
 string userInput()
 {
   string mes;
   do {
     cout << "YOU: ";
     getline(cin, mes);
-    if(mes == "@exit") exit(0); // Exit if the user said so :)
+    if(mes == "@exit") exit(0);
   } while(mes == "");
   return mes;
 }
 
-/** Generate Reply
-* @param {string} The user's message
-* @return {string} Bot's Reply
-*/
+/**
+ * Generate Reply
+ *
+ * Routine :
+ * (1) Compare user's message to each element in the vector [ OO ikukumpara ka niya sa iba ]
+ * (2) If the user's message is somehow similar
+ *        -> Push a probable reply to a temporary vector
+ * (3a) If there is any reply candidate,
+ *        Select a reply randomly (to allow variation) [ Para hindi siya magsawa sa'yo ]
+ * (3b) If there is none,
+ *        Echo user's message and learn from his reply
+ *        and then divert. (To start a new topic)  [ Para makapagsimula ulit ]
+ *
+ * @param {string} The user's message
+ * @return {string} Bot's Reply
+ */
 string botOutput(string mes)
 {
   /* Configuration */
@@ -125,13 +144,13 @@ string botOutput(string mes)
 
     /* Step 0: Learn from the user */
       saveToBrain(mes);
-    // Step 1: Return the user's input
+    /* Step 1: Return the user's input */
       replyWith(mes+"?");
-    // Step 2: Learn from the user's reply
+    /* Step 2: Learn from the user's reply */
       string reply = userInput();
-    // Step 3: Save it to the file
+    /* Step 3: Save it to the file */
       saveToBrain(reply);
-    // Step 4: Divert! If Possible! :)
+    /* Step 4: Divert! If Possible! :) */
     if(memory.size() > 0) {
       int randomNumber = rand() % memory.size();
       saveToBrain(memory[randomNumber]);
@@ -145,6 +164,7 @@ string botOutput(string mes)
 
   }
 }
+
 /** Send Message
 * @param {string} Message to Send
 * @return NONE
