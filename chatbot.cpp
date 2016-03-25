@@ -165,7 +165,8 @@ string botOutput(string mes)
   }
 }
 
-/** Send Message
+/**
+* Send Message
 * @param {string} Message to Send
 * @return NONE
 */
